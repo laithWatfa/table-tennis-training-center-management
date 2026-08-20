@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /out/
+build/
 
 # production
 /build
@@ -33,9 +34,18 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Prisma generated outputs or local SQLite files (if any)
+*.db
+*.db-journal
+
+/app/generated/prisma
+
+mockData.ts

@@ -1,0 +1,22 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SvgTable = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 19 24"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <g fill="currentColor" clipPath="url(#a)">
+      <path d="M9.12.538H3.534a.37.37 0 0 0-.342.268l-.456 1.92H9.12zM15.808.845a.37.37 0 0 0-.342-.269H9.88v2.15h6.422zM17.442 7.45H9.88v5.222h3.876l1.748 1.843H3.534l1.824-1.843H9.12V7.45H1.558L.418 12.21c-.076.23.114.461.342.461h1.52v5.607c0 .192.152.384.38.384s.38-.154.38-.384v-3.034h12.996v3.034c0 .192.152.384.38.384.19 0 .38-.154.38-.384v-5.607h1.52c.266 0 .456-.307.342-.538zm-14.44 5.222h1.33l-1.33 1.306zm12.996 1.267-1.254-1.267h1.254zM18.24 3.456H.76c-.19 0-.38.154-.38.384v2.534c0 .192.152.384.38.384h17.48c.19 0 .38-.153.38-.384V3.84c0-.23-.152-.384-.38-.384" />
+    </g>
+    <defs>
+      <clipPath id="a">
+        <path fill="#fff" d="M0 0h19v24H0z" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+export default SvgTable;

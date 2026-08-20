@@ -1,0 +1,198 @@
+
+// =========================
+// Prisma Schema – Final Design
+// =======================
+
+// ---------- Datasource & Generator ----------
+
+datasource db {
+  provider = "postgresql" // or mysql / sqlite)
+}
+
+generator client {
+  provider = "prisma-client-js"
+  //   output   = "../app/generated/prisma"
+  // runtime  = "vercel-edge"
+}
+
+// ---------- ENUMS ----------
+
+enum InvoiceStatus {
+  PAID
+  UNPAID
+}
+
+enum Role {
+  Admin
+  Player
+}
+
+// ---------- USER / PLAYER ----------
+
+model User {
+  id           String   @id @default(cuid())
+  fullName     String
+  email        String   @unique
+  password     String
+  dateOfBirth  DateTime
+  createAt DateTime @default(now())
+  role       Role @default(Player)
+  subscriptions Subscription[]
+  reservations  Reservation[]
+  invoices      Invoice[]
+  groupMembers  GroupMember[]
+}
+
+// ---------- SUBSCRIPTION PLANS (WHAT USER SEES) ----------
+
+model SubscriptionPlan {
+  id             String   @id @default(cuid())
+  name           String
+  classesPerWeek Int
+  monthlyPrice   Float
+  withCoach Boolean @default(true)
+  withPaddles Boolean @default(true)
+  createdAt      DateTime @default(now())
+
+  variants       PlanVariant[]
+}
+
+// ---------- AGE GROUPS (OPERATIONAL GROUPING) ----------
+
+model AgeGroup {
+  id        String   @id @default(cuid())
+  name      String   // e.g. U13, U16, Adults
+  minAge    Int
+  maxAge    Int
+
+  
+  variants  PlanVariant[]
+  
+}
+
+// ---------- PLAN × AGE GROUP VARIANT ----------
+
+model PlanVariant {
+  id           String @id @default(cuid())
+  planId       String
+  ageGroupId   String
+
+  displayName  String // e.g. "Premium - تحت 13 سنة"
+
+  plan         SubscriptionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  ageGroup     AgeGroup          @relation(fields: [ageGroupId], references: [id], onDelete: Cascade)
+
+  subscriptions Subscription[]
+  members   GroupMember[]
+  schedules GroupSchedule[]
+  reservations   Reservation[]
+
+  @@unique([planId, ageGroupId])
+}
+
+// ---------- USER SUBSCRIPTION (CONTRACT) ----------
+
+model Subscription {
+  id            String   @id @default(cuid())
+  userId        String
+  planVariantId String
+  startDate     DateTime @default(now())
+  endDate       DateTime?
+
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planVariant   PlanVariant @relation(fields: [planVariantId], references: [id], onDelete: Cascade)
+
+  invoices      Invoice[]
+
+  @@index([userId])
+  @@index([endDate]) 
+}
+
+// ---------- AGE GROUP SCHEDULE ----------
+
+model GroupSchedule {
+  id         String   @id @default(cuid())
+  planVariantId String @default("1")
+  dayOfWeek  Int      // 0 = Sunday
+  startHour   Float @default(15)      // Hours from midnight
+  duration   Int      // minutes
+
+  planVariant   PlanVariant @relation(fields: [planVariantId], references: [id], onDelete: Cascade)
+
+  @@index([planVariantId])
+}
+
+// ---------- GROUP MEMBERSHIP (MOVEMENT TRACKING) ----------
+
+model GroupMember {
+  id              String   @id @default(cuid())
+  userId          String
+  planeVariantId      String @default("1")
+  joinedAt        DateTime @default(now())
+  leftAt          DateTime?
+
+  user            User         @relation(fields: [userId], references: [id])
+  planeVariant        PlanVariant     @relation(fields: [planeVariantId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([planeVariantId])
+}
+
+// ---------- PRIVATE RESERVATIONS ----------
+
+model Reservation {
+  id           String   @id @default(cuid())
+  userId       String
+  date         DateTime
+  startHour     Float      // hours from midnight
+  duration     Int      // minutes
+  withCoach    Boolean  @default(false)
+  withPaddles  Boolean  @default(false)
+  isSubscription Boolean @default(false)
+  table Int @default(1)
+
+  planVariantId  String?
+
+  user         User     @relation(fields: [userId], references: [id])
+  planVariant    PlanVariant? @relation(fields: [planVariantId], references: [id], onDelete: Cascade)
+  invoice      Invoice? 
+
+  @@index([userId])
+  @@index([date])
+}
+
+// ---------- INVOICES (SUBSCRIPTIONS & RESERVATIONS) ----------
+
+model Invoice {
+  id             String        @id @default(cuid())
+  amount         Float
+  status         InvoiceStatus
+  createdAt      DateTime      @default(now())
+  paidAt         DateTime?
+
+  userId         String
+  reservationId  String? @unique
+  subscriptionId String?
+
+  user           User          @relation(fields: [userId], references: [id])
+  reservation    Reservation?  @relation(fields: [reservationId], references: [id])
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([subscriptionId])
+}
+
+
+model VenueSetting {
+  id                 String   @id @default("global-config") // Forces a single global row
+  tableRatePerHour   Float    @default(60)
+  coachRatePerHour   Float    @default(50)
+  paddlesFlatFee     Float    @default(10)
+  maxDebtLimit       Float    @default(1000)
+  openHour           Int      @default(10) // e.g., 10 AM
+  closeHour          Int      @default(23) // e.g., 11 PM
+  totalTables        Int      @default(2)       // Dynamic table count tracker
+  cancellationWindow Int      @default(2)       // Lockout duration in hours
+  updatedAt          DateTime @default(now()) @updatedAt
+}

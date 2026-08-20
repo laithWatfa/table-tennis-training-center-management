@@ -1,26 +1,181 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================
+   Base Theme Variables
+================================ */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Shared Colors */
+  
+  
+  --gray-bg: rgba(148, 163, 184, 0.15);
+  --whiteT: #F1F5F9;
+
+
+  --font-tajawal: 'Tajawal', sans-serif;
+  /* Typography Sizes */
+  --h1: 48px;
+  --h2: 36px;
+  --h3: 28px;
+  --lead: 22px;
+  --body: 18px;
+  --small: 16px;
+  --meta: 14px;
+  --caption: 12px;
+
+  /* Arabic Typography Sizes */
+
+
+  /* Effects */
+  --shadow-basic: 0px 3px 4px rgba(0, 0, 0, 0.25);
+  --shadow-xs: 0px 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-hero: 8px 8px 8px rgba(0, 0, 0, 0.25);
+  --shadow-signup-image: 8px 0px 8px rgba(0, 0, 0, 0.25);
+  --shadow-button-inner: inset 1px -3px 6px rgba(0, 0, 0, 0.25);
+  --shadow-small: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  --shadow-mid: 0px 8px 4px rgba(0, 0, 0, 0.25);
+  --background-blur: none; /* Add value if needed */
 }
+
+/* ================================
+   Light Theme
+================================ */
+
+[data-theme="light"] {
+  --font-tajawal: 'Tajawal', sans-serif;
+  --primary: rgba(229, 57, 53, 1);
+  --secondary: rgba(30, 136, 229, 1);
+  --accent: rgba(67, 160, 71, 1);
+  --background: rgba(249, 250, 251, 1);
+  --surface: rgba(255, 255, 255, 1);
+  --text-primary: rgba(31, 41, 55, 1);
+  --text-secondary: rgba(107, 114, 128, 1);
+  --amber: rgba(251, 140, 0, 1);
+}
+
+/* ================================
+   Dark Theme
+================================ */
+
+[data-theme="dark"] {
+  --font-tajawal: 'Tajawal', sans-serif;
+  --primary: rgba(239, 83, 80, 1);
+  --secondary: rgba(100, 181, 246, 1);
+  --accent: rgba(102, 187, 106, 1);
+  --background: rgba(15, 23, 42, 1);
+  --surface: rgba(30, 41, 59, 1);
+  --text-primary: rgba(241, 245, 249, 1);
+  --text-secondary: rgba(148, 163, 184, 1);
+  --amber: rgba(255, 179, 0, 1);
+}
+
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-tajawal: var(--font-tajawal);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--surface);
+}
+
+
+.outlined-button {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 0px 8px 8px 8px;
+  color: var(--whiteT);
+  border: 2px solid var(--whiteT);
+  cursor: pointer;
+  border-radius: 12px;
+  transition: .3s;
+  
+  line-height: 1.4;
+  box-shadow: var(--shadow-basic);
+  
+  &:hover {
+    /* border-color: var(--text-primary);
+    color: var(--text-primary); */
+    background-color: var(--primary);
+  }
+}
+
+.filled-button {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 0px 8px 8px 8px;
+  color: var(--whiteT);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: .3s;
+  line-height: 1.4;
+  box-shadow: var(--shadow-basic);
+  background-color: var(--primary);
+  font-weight: bold;
+  
+  &:hover {
+    background-color: rgba(209, 6, 3, 1);
+  }
+}
+
+
+input {
+  border-radius: 8px;
+  background-color: var(--surface);
+  border: 1px solid #D5D7DA;
+  transition: 0.3s;
+  padding: 4px 8px;
+  box-shadow: var(--shadow-xs);
+}
+input::placeholder {
+  color: var(--text-secondary);
+}
+input:focus {
+  outline-color: var(--primary) ;
+  /* border: 2px solid var(--primary) */
+}
+
+input[type="month"]::-webkit-calendar-picker-indicator {
+  opacity: 0; /* hides the default icon */
+  width:24px;
+  cursor: pointer;
+}
+
+select {
+  /* opacity: 0; */
+  appearance: none;          
+  -webkit-appearance: none; 
+  -moz-appearance: none;    
+}
+select:hover {
+  cursor: pointer;
+}
+
+
+
+/* app/globals.css */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, var(--surface) 25%, var(--grayBG) 50%, var(--surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+/* For Dark Mode fallback adapt rendering variables */
+.dark .animate-shimmer {
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 200% 100%;
 }
