@@ -5,7 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma"; // Your standard working pool connection file!
 import { compare } from "bcryptjs";
 import { authConfig } from "./auth.config";
-import { Role } from "@prisma/client";
+import { Role } from "@/app/generated/prisma/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,

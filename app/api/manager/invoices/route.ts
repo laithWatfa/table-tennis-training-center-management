@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { InvoiceStatus } from "@prisma/client";
+import { InvoiceStatus } from "@/app/generated/prisma/client";
 
 export async function GET(request: Request) {
 const session = await auth();

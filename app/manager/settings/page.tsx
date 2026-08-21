@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Check, Cancel } from "@/icons";
 import { CgHashtag, CgMail, CgSpinner, CgTime } from "react-icons/cg";
-import { VenueSetting } from "@prisma/client";
+import { VenueSetting } from "@/app/generated/prisma/client";
 import AgeGroupsSettings from "@/components/manager/AgeGroupSettings";
 
 
