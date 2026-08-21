@@ -34,8 +34,8 @@ try {
     }
 
     // 3. Extract player and group combinations to offload
-    const targetUserIds = expiredSubscriptions.map((s) => s.userId);
-    const targetVariantIds = expiredSubscriptions.map((s) => s.planVariantId);
+    const targetUserIds = expiredSubscriptions.map((s : {userId : string}) => s.userId);
+    const targetVariantIds = expiredSubscriptions.map((s : {planVariantId : string}) => s.planVariantId);
 
     // 4. Update GroupMember rows inside an atomic transaction
     // Populating 'leftAt' removes them from active lists while preserving historical rosters
