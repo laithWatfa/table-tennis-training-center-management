@@ -8,37 +8,43 @@ import { signOut } from 'next-auth/react';
 
 const Header = () => {
 
-  const [theme, setTheme] = useState(()=> {
-    const savedTheme = (localStorage.getItem("theme") as "light" | "dark") || "light";
-    return savedTheme
-  });
+// 1. Initialize with a safe default string. No server crash!
+const [theme, setTheme] = useState<"light" | "dark">("light");
 
- useEffect(() => {
-    // 1. Safely run on mount inside the client browser context boundary
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.setAttribute("data-theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.setAttribute("data-theme", "light");
-    }
-  }, []);
+useEffect(() => {
+  // 2. Read from localStorage safely here (runs ONLY in the browser)
+  const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+  const initialTheme = savedTheme || "light";
+  
+  if (savedTheme) {
+    setTheme(savedTheme);
+  }
 
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    
-    // 2. FIXED: Use newTheme parameter reference directly to prevent asynchronous state lag!
-    localStorage.setItem("theme", newTheme);
+  // 3. Apply the initial attributes to the document
+  if (initialTheme === "dark") {
+    document.documentElement.classList.add("dark");
+    document.documentElement.setAttribute("data-theme", "dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+    document.documentElement.setAttribute("data-theme", "light");
+  }
+}, []); // Empty dependency array ensures this runs exactly once on mount
 
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.setAttribute("data-theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.setAttribute("data-theme", "light");
-    }
-  };
+const toggleTheme = () => {
+  const newTheme = theme === "light" ? "dark" : "light";
+  setTheme(newTheme);
+  
+  localStorage.setItem("theme", newTheme);
+
+  if (newTheme === "dark") {
+    document.documentElement.classList.add("dark");
+    document.documentElement.setAttribute("data-theme", "dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+    document.documentElement.setAttribute("data-theme", "light");
+  }
+};
+
 
       const handleLogout = async () => {  
       // Triggers NextAuth cleanup and sets redirect target location
