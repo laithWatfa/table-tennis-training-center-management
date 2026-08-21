@@ -4,7 +4,7 @@ import PlanCard from '@/components/player/PlanCard';
 import SubscriptionCard from '@/components/player/SubscriptionCard';
 import { CgArrowLeft } from 'react-icons/cg';
 import { redirect } from 'next/navigation';
-import { GroupSchedule, SubscriptionPlan } from '@prisma/client';
+import { GroupSchedule, SubscriptionPlan } from "@/app/generated/prisma/client";
 import { PlayerActiveSubscription } from '@/types';
 
 // Helper to convert float hours to dynamic Arabic string display (e.g., 13.5 -> "1:30 م")

@@ -7,7 +7,7 @@ import { Arrow, Cancel, Check, Delete, Edit } from '@/icons';
 import { useState } from 'react';
 import useSWR from "swr";
 import { EditPlanForm } from './forms';
-import { SubscriptionPlan } from '@prisma/client';
+import { SubscriptionPlan } from "@/app/generated/prisma/client";
 // interface SubscriptionPlan {
 // id: string;
 // name: string;

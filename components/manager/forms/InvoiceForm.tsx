@@ -5,7 +5,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 import { CgSpinner } from 'react-icons/cg';
 import UserAutocomplete from '../UserAutocomplete';
-import { InvoiceStatus } from '@prisma/client';
+import { InvoiceStatus } from "@/app/generated/prisma/client";
 
 interface InvoiceFormProps {
     setShow: Dispatch<SetStateAction<boolean>>;
