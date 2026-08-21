@@ -119,7 +119,6 @@ try {
             date: new Date(date),
             startHour: Number(startHour),
             duration: Number(duration),
-            status: status, // Syncs reservation status parameter flag
             withCoach: Boolean(withCoach),
             withPaddles: Boolean(withPaddles),
             userId: userId,
