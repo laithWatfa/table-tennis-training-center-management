@@ -6,7 +6,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 // A. EDIT AN EXISTING PLAN
 export async function PATCH(
 request: Request,
-{ params }: { params: { id: string } }
+{ params }: { params: Promise<{ id: string }> }
 ) {
 const session = await auth();
 if (!session?.user?.id || session.user.role !== "Admin") {
