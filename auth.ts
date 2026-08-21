@@ -9,9 +9,9 @@ import { Role } from "@prisma/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
-  adapter: PrismaAdapter(prisma), // Perfectly safe from Edge runtime bugs here
+  adapter: PrismaAdapter(prisma) as any, // Perfectly safe from Edge runtime bugs here
   providers: [
-    ...authConfig.providers,
+    ...authConfig.providers, 
     Credentials({
       name: "Credentials",
       async authorize(credentials) {
