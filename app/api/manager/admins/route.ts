@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 
-const SUPER_ADMIN_EMAIL = "laith.2723@gmail.com";
+const SUPER_ADMIN_EMAIL = process.env.SUPER_ADMIN_EMAIL || "admin@alsindyan.com";
 
 // 1. GET: Fetch list of all active system administrators
 export async function GET() {
