@@ -11,8 +11,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  //   output   = "../app/generated/prisma"
-  // runtime  = "vercel-edge"
+  output   = "../app/generated/prisma/client" 
 }
 
 // ---------- ENUMS ----------
