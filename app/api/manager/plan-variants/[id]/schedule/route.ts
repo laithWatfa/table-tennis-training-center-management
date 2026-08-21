@@ -20,7 +20,7 @@ return resultDate;
 
 export async function PUT(
 request: Request,
-{ params }: { params: { id: string } }
+{ params }: { params: Promise<{ id: string }> }
 ) {
 const session = await auth();
 if (!session?.user?.id || session.user.role !== "Admin") {

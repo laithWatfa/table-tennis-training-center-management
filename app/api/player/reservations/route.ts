@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { checkUnpaidLimit } from "@/lib/invoice-gate"; // 👈 1. IMPORT THE FINANCE PROTECTION GATE
 import { NextResponse } from "next/server";
 
-async function calculateInvoiceAmount(durationMinutes: number, withCoach: boolean, withPaddles: boolean): number {
+async function calculateInvoiceAmount(durationMinutes: number, withCoach: boolean, withPaddles: boolean): Promise<number> {
 const settings = await prisma.venueSetting.findUnique({ where: { id: "global-config" } });
 
 const tableRatePerMinute = (settings?.tableRatePerHour || 60) / 60;

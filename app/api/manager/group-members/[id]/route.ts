@@ -4,14 +4,14 @@ import prisma from "@/lib/prisma";
 
 export async function PATCH(
 request: Request,
-{ params }: { params: { id: string } }
+{ params }: { params: Promise<{ id: string }> }
 ) {
 const session = await auth();
 if (!session?.user?.id || session.user.role !== "Admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 }
 
-const { id } = params;
+const { id } = await params;
 
 try {
     const json = await request.json();

@@ -47,7 +47,7 @@ try {
 // B. DELETE A PLAN
 export async function DELETE(
 request: Request,
-{ params }: { params: { id: string } }
+{ params }: { params: Promise<{ id: string }> }
 ) {
 const session = await auth();
 if (!session?.user?.id || session.user.role !== "Admin") {
