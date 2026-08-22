@@ -2,7 +2,7 @@
 
 import { Arrow } from '@/icons';
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import { SubscriptionPlan } from "@/app/generated/prisma/client";
+import { SubscriptionPlan } from "@prisma/client";
 
 // Define the shape of the plan to be updated
 

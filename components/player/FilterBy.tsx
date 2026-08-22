@@ -1,6 +1,6 @@
 "use client"
 import { Check, Filters } from '@/icons'
-import { InvoiceStatus } from "@/app/generated/prisma/client";
+import { InvoiceStatus } from "@prisma/client";
 import React, { useState } from 'react'
 
 export interface FiltersState { 

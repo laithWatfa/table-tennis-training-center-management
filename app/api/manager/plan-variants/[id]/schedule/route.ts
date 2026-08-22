@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { GroupSchedule, Reservation } from "@/app/generated/prisma/client";
+import { GroupSchedule, Reservation } from "@prisma/client";
 
 // Helper function to find the calendar date of the next specific weekday
 function getNextWeekdayDate(baseDate: Date, targetDayOfWeek: number): Date {

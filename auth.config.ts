@@ -1,5 +1,5 @@
 // auth.config.ts
-import { Role } from "@/app/generated/prisma/client";
+import { Role } from "@prisma/client";
 import type { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 

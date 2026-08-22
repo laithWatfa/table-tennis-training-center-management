@@ -72,8 +72,13 @@
 }
 
 
-@theme inline {
+:root {
   --font-tajawal: var(--font-tajawal);
+}
+
+/* 💻 Standard vanilla CSS fallback replacement for Tailwind utility classes */
+.font-tajawal {
+  font-family: var(--font-tajawal);
 }
 
 

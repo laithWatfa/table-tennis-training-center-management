@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { checkUnpaidLimit } from "@/lib/invoice-gate";
 import prisma from "@/lib/prisma";
-import { InvoiceStatus } from "@/app/generated/prisma/client";
+import { InvoiceStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 

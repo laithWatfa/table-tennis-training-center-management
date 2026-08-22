@@ -13,7 +13,7 @@ reservation?: { type?: string; durationMinutes?: number } | null;
 subscription?: { name?: string; duration?: string } | null;
 }
 
-import { Prisma } from "@/app/generated/prisma/client";
+import { Prisma } from "@prisma/client";
 
 // 1. Define the exact database selection query layout
 const reservationWithInvoiceArgs = Prisma.validator<Prisma.ReservationDefaultArgs>()({
